@@ -311,9 +311,9 @@ header.masthead .intro-text .intro-heading {
 
 .program-modal .modal-dialog {
   margin: 1rem;
-  max-width: 50vw;
+  width: 76vw;
   align-self: center;
-  margin-left: 25vw;
+  margin-left: 13vw;
 }
 
 .program-modal .modal-content {
