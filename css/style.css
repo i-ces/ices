@@ -359,6 +359,7 @@ header.masthead .intro-text .intro-heading {
   height: 75px;
   cursor: pointer;
   background-color: transparent;
+  visibility: hidden;
 }
 
 .program-modal .close-modal:hover {
