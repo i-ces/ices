@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE)
  */
 
- @import url('https://fonts.googleapis.com/css?family=Just+Another+Hand');
+@import url('https://fonts.googleapis.com/css?family=Just+Another+Hand');
 
 body {
   overflow-x: hidden;
@@ -77,13 +77,16 @@ section h3.section-subheading {
   border-color: #fed136;
 }
 
-.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:hover {
   background-color: #fec810 !important;
   border-color: #fec810 !important;
   color: white;
 }
 
-.btn-primary:active, .btn-primary:focus {
+.btn-primary:active,
+.btn-primary:focus {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
   box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
 }
@@ -127,11 +130,14 @@ img::-moz-selection {
 
 #mainNav .navbar-brand {
   color: whitesmoke;
-  
+
   font-family: 'Just Another Hand', cursive;
 }
 
-#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+#mainNav .navbar-brand.active,
+#mainNav .navbar-brand:active,
+#mainNav .navbar-brand:focus,
+#mainNav .navbar-brand:hover {
   color: #fec503;
 }
 
@@ -144,7 +150,8 @@ img::-moz-selection {
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+#mainNav .navbar-nav .nav-item .nav-link.active,
+#mainNav .navbar-nav .nav-item .nav-link:hover {
   color: #fed136;
 }
 
@@ -157,19 +164,23 @@ img::-moz-selection {
     border: none;
     background-color: transparent;
   }
+
   #mainNav .navbar-brand {
     font-size: 1.75em;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
   }
+
   #mainNav .navbar-nav .nav-item .nav-link {
     padding: 1.1em 1em !important;
   }
+
   #mainNav.navbar-shrink {
     padding-top: 0;
     padding-bottom: 0;
     background-color: #212529;
   }
+
   #mainNav.navbar-shrink .navbar-brand {
     font-size: 1.25em;
     padding: 12px 0;
@@ -212,6 +223,7 @@ header.masthead .intro-text .intro-heading {
     padding-top: 300px;
     padding-bottom: 200px;
   }
+
   header.masthead .intro-text .intro-lead-in {
     font-size: 40px;
     font-style: italic;
@@ -219,6 +231,7 @@ header.masthead .intro-text .intro-heading {
     margin-bottom: 25px;
     font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   }
+
   header.masthead .intro-text .intro-heading {
     font-size: 60px;
     font-weight: 700;
@@ -342,8 +355,9 @@ header.masthead .intro-text .intro-heading {
   margin-top: 0;
   margin-bottom: 30px;
 }
-.program-modal li{
-    font-weight: bolder;
+
+.program-modal li {
+  font-weight: bolder;
 }
 
 .program-modal .modal-content img {
@@ -392,12 +406,12 @@ header.masthead .intro-text .intro-heading {
   background-color: #212529;
 }
 
-.program-link img{
-    object-fit: cover;
-    height: 200px;
-    width: auto;
-    align-content: center;
-    
+.program-link img {
+  object-fit: cover;
+  height: 200px;
+  width: auto;
+  align-content: center;
+
 }
 
 .team-member {
@@ -409,6 +423,7 @@ header.masthead .intro-text .intro-heading {
   width: 150px;
   height: 150px;
   border: 7px solid #fff;
+  object-fit: cover;
 }
 
 .team-member h4 {
@@ -442,66 +457,66 @@ header.masthead .intro-text .intro-heading {
 
 
 .container.gallery-container {
-    background-color: #fff;
-    color: #35373a;
-    min-height: 100vh;
-    border-radius: 20px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
+  background-color: #fff;
+  color: #35373a;
+  min-height: 100vh;
+  border-radius: 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
 
 }
 
 .gallery-container h1 {
-    text-align: center;
-    margin-top: 70px;
-    font-family: 'Droid Sans', sans-serif;
-    font-weight: bold;
+  text-align: center;
+  margin-top: 70px;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: bold;
 }
 
 .gallery-container p.page-description {
-    text-align: center;
-    max-width: 800px;
-    margin: 25px auto;
-    color: #888;
-    font-size: 18px;
+  text-align: center;
+  max-width: 800px;
+  margin: 25px auto;
+  color: #888;
+  font-size: 18px;
 }
 
 .tz-gallery {
-    padding: 40px;
+  padding: 40px;
 }
 
 .tz-gallery .lightbox img {
-    width: 300px;
-    height: 200px;
-    margin-bottom: 30px;
-    transition: 0.2s ease-in-out;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+  width: 300px;
+  height: 200px;
+  margin-bottom: 30px;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 
 .tz-gallery .lightbox img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .tz-gallery img {
-    border-radius: 4px;
-    width:230px;
-    height: 280px;
+  border-radius: 4px;
+  width: 230px;
+  height: 280px;
 }
 
 .baguetteBox-button {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 
 @media(max-width: 768px) {
-    body {
-        padding: 0;
-    }
+  body {
+    padding: 0;
+  }
 
-    .container.gallery-container {
-        border-radius: 0;
-    }
+  .container.gallery-container {
+    border-radius: 0;
+  }
 }
 
 
@@ -513,16 +528,16 @@ header.masthead .intro-text .intro-heading {
 
 section#contact {
   background-color: #212529;
-  
-  
+
+
 }
 
 section#contact .section-heading {
   color: #fff;
 }
 
-section#contact .container ul{
-  color:#fec503;
+section#contact .container ul {
+  color: #fec503;
 }
 
 
@@ -567,6 +582,8 @@ ul.social-buttons li a {
   background-color: #212529;
 }
 
-ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
+ul.social-buttons li a:active,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:hover {
   background-color: #fed136;
 }
