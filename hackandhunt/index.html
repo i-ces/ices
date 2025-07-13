@@ -337,6 +337,30 @@
                 alert('Tab switching detected! Content may be protected.');
             }
         });
+
+        // Dancing images
+        function randomDance(img, baseTop, baseLeft) {
+            const t = Date.now() / 600;
+            const top = baseTop + Math.sin(t + Math.random()*2) * 20;
+            const left = baseLeft + Math.cos(t + Math.random()*2) * 20;
+            img.style.top = top + 'vh';
+            img.style.left = left + 'vw';
+        }
+        const scatterImgs = document.querySelectorAll('.scatter-img');
+        // Store base positions for each image
+        const basePositions = [
+            {top:12, left:8},
+            {top:70, left:15},
+            {top:30, left:80},
+            {top:60, left:60}
+        ];
+        function animateImages() {
+            scatterImgs.forEach((img, i) => {
+                const base = basePositions[i];
+                randomDance(img, base.top, base.left);
+            });
+        }
+        setInterval(animateImages, 60);
     </script>
 </body>
 
