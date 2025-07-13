@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hack and Hunt</title>
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.25;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0"/></filter><rect width="400" height="400" filter="url(%23noise)"/></svg>');
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .desc {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            user-select: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ocr-obfuscate {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        #uncopiable {
+            font-size: 1.3rem;
+            letter-spacing: 0.12em;
+            background: none;
+            color: #fff;
+            padding: 0.7em 1em;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: bold;
+            user-select: none;
+            transform: rotate(-7deg) skewX(12deg);
+            text-shadow: 2px 2px 2px #ff8c00, -2px -2px 2px #ff0080, 1px 1px 0 #4a5568;
+            mix-blend-mode: difference;
+            position: relative;
+            z-index: 3;
+        }
+
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0"/></filter><rect width="100" height="100" filter="url(%23noise)"/></svg>');
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .character-variation {
+            display: inline-block;
+            transform: scale(1.1, 0.9);
+        }
+
+        .char-distort {
+            display: inline-block;
+            animation: distort 0.5s infinite alternate;
+        }
+
+        @keyframes distort {
+            0% {
+                transform: scale(1, 1);
+            }
+
+            100% {
+                transform: scale(1.1, 0.8) rotate(1deg);
+            }
+        }
+
+        .char-rotate {
+            display: inline-block;
+            animation: rotate 4s infinite linear;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .scatter-img {
+            position: fixed;
+            width: 220px;
+            height: auto;
+            border-radius: 0;
+            box-shadow: none;
+            background: none;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .image-gallery {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise-overlay"></div>
+    <!-- Scatter images randomly on the page -->
+    <img src="images/hnh/Brandmark.png"   alt="Brandmark" class="scatter-img" style="top:12vh;left:8vw;">
+    <img src="images/hnh/Wordmark.png"   alt="Wordmark" class="scatter-img" style="top:70vh;left:15vw;">
+    <img src="images/hnh/cry.png"   alt="Cry" class="scatter-img" style="top:30vh;left:80vw;">
+    <img src="images/hnh/hack.png"   alt="Hack" class="scatter-img" style="top:60vh;left:60vw;">
+        <div class="card">
+        <h1>Hack and Hunt</h1>
+        <div class="ocr-obfuscate">
+            <svg id="noise-svg" width="340" height="60"
+                style="position:absolute;left:50%;transform:translateX(-50%);z-index:0;pointer-events:none;">
+                <rect x="0" y="0" width="340" height="60" fill="url(#noise)" />
+                <defs>
+                    <pattern id="noise" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <rect x="0" y="0" width="10" height="10" fill="#ff8c00" opacity="0.12" />
+                        <circle cx="5" cy="5" r="2" fill="#ff0080" opacity="0.18" />
+                        <rect x="2" y="2" width="6" height="6" fill="#fff" opacity="0.11" />
+                    </pattern>
+                </defs>
+                <g id="static-noise">
+                    <line x1="10" y1="10" x2="330" y2="50" stroke="#ff0080" stroke-width="2" opacity="0.4" />
+                    <line x1="20" y1="50" x2="320" y2="10" stroke="#ff8c00" stroke-width="2" opacity="0.4" />
+                    <line x1="170" y1="0" x2="170" y2="60" stroke="#4a5568" stroke-width="1" opacity="0.3" />
+                    <rect x="50" y="20" width="30" height="8" fill="#ff0080" opacity="0.15" />
+                    <rect x="200" y="40" width="20" height="6" fill="#ff8c00" opacity="0.15" />
+                    <circle cx="120" cy="30" r="7" fill="#fff" opacity="0.13" />
+                    <circle cx="250" cy="15" r="5" fill="#4a5568" opacity="0.18" />
+                </g>
+                <g id="animated-noise"></g>
+            </svg>
+            <p id="uncopiable" style="position:relative;z-index:1;">
+                <strong id="blink-string">
+                    <span class="character-variation">f</span>
+                    <span class="char-distort">8</span>
+                    <span style="position:relative;top:-2px;">J</span>
+                    <span class="character-variation">k</span>
+                    <span class="char-rotate">2</span>
+                    <span style="transform:scaleX(0.8);">p</span>
+                    <span class="character-variation">Q</span>
+                    <span style="transform:skewX(10deg);">w</span>
+                    <span class="char-distort">9</span>
+                    <span style="position:relative;top:1px;">z</span>
+                    <span class="character-variation">L</span>
+                    <span style="transform:scaleX(1.2);">x</span>
+                    <span class="char-rotate">7</span>
+                    <span style="transform:skewX(-5deg);">V</span>
+                    <span class="character-variation">b</span>
+                    <span class="char-distort">3</span>
+                    <span style="position:relative;top:-1px;">s</span>
+                    <span class="character-variation">T</span>
+                    <span style="transform:scaleX(0.9);">n</span>
+                    <span class="char-rotate">4</span>
+                    <span style="transform:skewX(8deg);">Y</span>
+                    <span class="character-variation">c</span>
+                    <span class="char-distort">6</span>
+                    <span style="position:relative;top:2px;">R</span>
+                    <span style="transform:scaleX(1.1);">a</span>
+                    <span class="char-distort">M</span>
+                    <span class="character-variation">q</span>
+                    <span style="transform:skewX(-7deg);">X</span>
+                    <span class="char-rotate">5</span>
+                    <span style="position:relative;top:-2px;">G</span>
+                    <span class="character-variation">u</span>
+                    <span class="char-distort">P</span>
+                    <span style="transform:scaleX(1.1);">d</span>
+                    <span class="char-rotate">Z</span>
+                    <span style="transform:skewX(12deg);">j</span>
+                </strong>
+            </p>
+        </div>
+    </div>
+    <script>
+        // Enhanced anti-copy measures
+        const el = document.getElementById('uncopiable');
+        const disableCopy = (e) => {
+            e.preventDefault();
+            // Show fake copied feedback
+            const fakeFeedback = document.createElement('div');
+            fakeFeedback.textContent = 'Copied!';
+            fakeFeedback.style.position = 'fixed';
+            fakeFeedback.style.backgroundColor = '#4CAF50';
+            fakeFeedback.style.color = 'white';
+            fakeFeedback.style.padding = '5px 10px';
+            fakeFeedback.style.borderRadius = '3px';
+            fakeFeedback.style.zIndex = '9999';
+            fakeFeedback.style.top = (e.clientY - 30) + 'px';
+            fakeFeedback.style.left = e.clientX + 'px';
+            document.body.appendChild(fakeFeedback);
+            setTimeout(() => fakeFeedback.remove(), 1000);
+        };
+
+        el.addEventListener('copy', disableCopy);
+        el.addEventListener('cut', disableCopy);
+        el.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            alert('Right-click disabled for security reasons');
+        });
+        el.addEventListener('mousedown', (e) => {
+            if (e.button === 0) { // Left click
+                e.preventDefault();
+                // Add visual feedback to discourage selection
+                el.style.backgroundColor = 'rgba(255,0,0,0.1)';
+                setTimeout(() => el.style.backgroundColor = '', 300);
+            }
+        });
+        el.addEventListener('selectstart', (e) => e.preventDefault());
+
+        // Disable keyboard shortcuts
+        document.addEventListener('keydown', function (e) {
+            // Disable Ctrl+C, Ctrl+X, Ctrl+A
+            if ((e.ctrlKey || e.metaKey) &&
+                (e.key === 'c' || e.key === 'C' ||
+                    e.key === 'x' || e.key === 'X' ||
+                    e.key === 'a' || e.key === 'A')) {
+                e.preventDefault();
+                // Show fake selection
+                document.designMode = "on";
+                setTimeout(() => {
+                    document.getSelection().removeAllRanges();
+                    document.designMode = "off";
+                }, 100);
+            }
+            // Disable Print Screen
+            if (e.key === 'PrintScreen') {
+                e.preventDefault();
+                alert('Screenshots disabled for security reasons');
+            }
+        });
+
+        // Disable drag and drop
+        document.addEventListener('dragstart', (e) => {
+            if (e.target === el || el.contains(e.target)) {
+                e.preventDefault();
+            }
+        });
+
+        // Animated SVG noise
+        const animatedNoise = document.getElementById('animated-noise');
+        function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function updateNoise() {
+            let noise = '';
+            for (let i = 0; i < 12; i++) {
+                noise += `<line x1='${randomInt(0, 340)}' y1='${randomInt(0, 60)}' x2='${randomInt(0, 340)}' y2='${randomInt(0, 60)}' stroke='#${Math.random() > 0.5 ? 'ff8c00' : 'ff0080'}' stroke-width='${randomInt(1, 3)}' opacity='0.25'/>`;
+            }
+            for (let i = 0; i < 8; i++) {
+                noise += `<circle cx='${randomInt(0, 340)}' cy='${randomInt(0, 60)}' r='${randomInt(2, 7)}' fill='#${Math.random() > 0.5 ? 'fff' : '4a5568'}' opacity='0.18'/>`;
+            }
+            animatedNoise.innerHTML = noise;
+        }
+        setInterval(updateNoise, 180);
+
+        // Flicker effect for the string
+        const blinkString = document.getElementById('blink-string');
+        function flicker() {
+            const opacity = 0.7 + Math.random() * 0.3;
+            const brightness = 0.7 + Math.random() * 0.6;
+            blinkString.style.opacity = opacity;
+            blinkString.style.filter = `brightness(${brightness})`;
+
+            // Randomly change character positions slightly
+            const chars = blinkString.children;
+            for (let i = 0; i < chars.length; i++) {
+                if (Math.random() > 0.7) {
+                    chars[i].style.transform = `translate(${Math.random() > 0.5 ? '-' : ''}${Math.random() * 2}px, ${Math.random() > 0.5 ? '-' : ''}${Math.random() * 2}px)`;
+                }
+            }
+        }
+        setInterval(flicker, 120);
+
+        // Character substitution trickery
+        setInterval(() => {
+            const chars = blinkString.children;
+            for (let i = 0; i < chars.length; i++) {
+                if (Math.random() > 0.95) { // 5% chance to briefly change a character
+                    const original = chars[i].textContent;
+                    chars[i].textContent = String.fromCharCode(original.charCodeAt(0) + 1);
+                    setTimeout(() => {
+                        chars[i].textContent = original;
+                    }, 50);
+                }
+            }
+        }, 500);
+
+        // Anti-screenshot measure (limited effectiveness)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                alert('Tab switching detected! Content may be protected.');
+            }
+        });
+    </script>
+</body>
+
+</html>
