@@ -40,7 +40,10 @@ interface StartOptions {
   retries?: number; // number of additional ports to try if occupied
 }
 
-async function listenWithRetry(port: number, retries: number): Promise<{ server: Server; port: number }> {
+async function listenWithRetry(
+  port: number,
+  retries: number,
+): Promise<{ server: Server; port: number }> {
   return new Promise((resolve) => {
     const attempt = (p: number, remaining: number) => {
       const server = app

@@ -12,7 +12,8 @@
     "dev:api": "turbo run dev --filter=@ices/api",
     "build": "turbo run build",
   "lint": "turbo run lint",
-  "format": "turbo run format",
+  "format": "turbo run format:write",
+  "format:check": "turbo run format",
   "test": "turbo run test",
     "clean": "turbo run clean --parallel",
     "clean:all": "rm -rf node_modules apps/*/node_modules packages/*/node_modules .turbo && bun install"

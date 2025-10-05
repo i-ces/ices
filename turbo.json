@@ -11,6 +11,9 @@
     },
     "lint": {},
     "format": {},
+    "format:write": {
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^build"],
       "outputs": []

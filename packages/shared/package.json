@@ -9,6 +9,7 @@
     "dev": "tsc -w -p tsconfig.json",
     "lint": "biome check .",
     "format": "biome format .",
+    "format:write": "biome format --write .",
     "test": "vitest run",
     "clean": "rm -rf dist"
   },
