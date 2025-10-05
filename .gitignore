@@ -1,6 +1,9 @@
 # Dependencies
 node_modules
 
+# Disallow nested workspace lockfiles (use only root bun.lock)
+apps/*/bun.lock
+
 # Output
 .next
 dist

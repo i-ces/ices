@@ -59,9 +59,9 @@ bun test    # Run tests (currently API only)
 
 ## Frontend (apps/web)
 
-- App Router enabled.
+- App Router only (Pages router removed to avoid conflicts).
 - Tailwind 4 imported via `globals.css` (no custom config yet).
-- Legacy `pages/index.tsx` included intentionally for compatibility while focusing on `app/`.
+- `next.config.ts` sets `turbopack.root` and `output: 'standalone'` for production container builds.
 
 ## Backend (apps/api)
 
@@ -69,7 +69,8 @@ Features:
 
 - Express server (`/health` endpoint): returns `{ status, mongo }`.
 - Mongo connection attempted on start unless disabled.
-- Exports `app` and `start()` for testability.
+- Dynamic port retry (default 5 retries) when a port is already in use.
+- Exports `app` and `start({ port?, retries? })` for testability & flexibility.
 
 Health response example:
 
@@ -94,17 +95,22 @@ import { PROJECT_NAME } from '@ices/shared';
 
 (Add a path alias later if desired.)
 
-## Testing (API)
+## Testing
 
-Framework: Vitest + Supertest.
-Test location: `apps/api/src/health.test.ts`.
-Run:
+Framework: Vitest + Supertest (API) + Vitest (shared).
+
+Locations:
+
+- API: `apps/api/src/*.test.ts` (health + port fallback tests)
+- Shared: `packages/shared/src/shared.test.ts`
+
+Run all:
 
 ```bash
 bun test
 ```
 
-Add more tests by placing `*.test.ts` files under `apps/api/src`.
+Add more tests with `*.test.ts` naming convention inside respective `src` folders.
 
 ## Biome (Lint & Format)
 
@@ -129,26 +135,31 @@ docker compose down
 
 Persistent Mongo volume: `mongo_data`.
 
-## Production (Suggested Flow)
+## Production Containers
 
-To create optimized builds:
-
-1. Build artifacts locally: `bun build`.
-2. (Optional) Create separate Docker images for `web` and `api`.
-3. Use environment variables for DB in deployment environment.
-
-Example (API only) image build:
+### API
 
 ```bash
 docker build -f apps/api/Dockerfile -t ices-api:prod .
 docker run -p 4000:4000 -e MONGODB_URI=mongodb://host.docker.internal:27017/ices ices-api:prod
 ```
 
-You can add a production Next.js Dockerfile later:
+### Web (Next.js standalone)
 
-```c
-apps/web/Dockerfile (multi-stage) -> next build -> standalone output
+```bash
+docker build -f apps/web/Dockerfile -t ices-web:prod .
+docker run -p 3000:3000 ices-web:prod
 ```
+
+The web Dockerfile relies on `output: 'standalone'` to ship only the necessary server files and dependencies.
+
+### Combined Deployment
+
+Use orchestrator (docker compose / k8s) to run both images, inject `MONGODB_URI` into API.
+
+## TypeScript & Module Resolution
+
+Backend / shared use `moduleResolution: node16` + `module: Node16` (future-compatible with TS 7). Web keeps its own `bundler` resolution isolated from backend.
 
 ## Troubleshooting
 
@@ -156,6 +167,7 @@ apps/web/Dockerfile (multi-stage) -> next build -> standalone output
 |-------|-------|-----|
 | Port 4000 in use | Previous API process | `lsof -i:4000 && kill <pid>` |
 | Next jumps to 3001/3002 | 3000 taken | Free the port or accept new port |
+| API keeps increasing port | Previous port(s) busy | First free port after base within retry window |
 | Mongo connection errors | Mongo not started | Start local Mongo / compose |
 | Tests fail: cannot find module | Missing dev deps | `bun install` |
 | Type path errors (`extends`) | Wrong relative path | Confirm `../../packages/config/tsconfig.base.json` |
@@ -163,6 +175,10 @@ apps/web/Dockerfile (multi-stage) -> next build -> standalone output
 ## Extending Next
 
 Add aliases via `apps/web/tsconfig.json` paths or a root tsconfig if you introduce cross-import patterns beyond `@ices/shared`.
+
+## Continuous Integration
+
+GitHub Actions workflow `.github/workflows/ci.yml` runs: install → lint → test → build.
 
 ## Future Ideas (Not Implemented Yet)
 
@@ -181,7 +197,6 @@ Add aliases via `apps/web/tsconfig.json` paths or a root tsconfig if you introdu
 
 ## License
 
-MIT (adjust later if needed).
+No licence
 
 ---
-If you need additional scaffolding (tests for web, prod Docker for Next, CI workflow), just ask and we can add them incrementally.
