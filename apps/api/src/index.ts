@@ -27,6 +27,10 @@ async function connectMongo() {
   }
 }
 
+app.get("/", (_req, res) => {
+  res.send("Api is running");
+})
+
 app.get("/health", (_req, res) => {
   const payload: HealthStatus = {
     status: "ok",
