@@ -54,6 +54,15 @@
             color: #fed136;
             opacity: 1;
         }
+        .animated-pulse-text {
+            display: inline-block;
+            animation: pulse-glow 2.5s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); color: #fed136; }
+            100% { transform: scale(1); }
+        }
     </style>
 
     <!---baguettebox-->
