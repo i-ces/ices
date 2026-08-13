@@ -26,6 +26,35 @@
     <!-- Custom styles for this template -->
     <link href="css\style.css" rel="stylesheet">
 
+    <!-- Announcement Floating Banner Styles -->
+    <style>
+        .new-site-banner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            max-width: 350px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #fed136; /* Accent color matching template */
+            background-color: #212529;
+            color: #fff;
+            border-top: none;
+            border-right: none;
+            border-bottom: none;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+        .new-site-banner .close {
+            color: #fff;
+            text-shadow: none;
+            opacity: 0.7;
+            padding: 12px 15px;
+        }
+        .new-site-banner .close:hover {
+            color: #fed136;
+            opacity: 1;
+        }
+    </style>
 
     <!---baguettebox-->
 
@@ -1651,6 +1680,15 @@
         baguetteBox.run('.tz-gallery');
     </script>
 
+    <!-- Announcement Floating Banner -->
+    <div class="new-site-banner alert alert-dismissible fade show" role="alert">
+        <span class="animated-pulse-text">
+            <strong>A New Look is Coming!</strong><br> We are currently upgrading our website. Check back soon for a brand new digital experience!
+        </span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
 
 </body>
